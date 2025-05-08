@@ -5,52 +5,8 @@
 组员：蔡烨南 王佳豪 王亦飞 丁心成
 
 ### 代码仓库介绍
+<img width="851" alt="截屏2025-05-08 16 51 39" src="https://github.com/user-attachments/assets/739638e5-f94e-488b-9412-8ffba0960022" />
 
-├── main.py             可运行主函数
-
-├── opts.py             参数设置
-
-├── evaluate.py
-
-├── train.py         
-
-├── models/
-
-│   └── AMDC.py        
-
-
-├── Dataset/
-
-│   ├── Dataset.py     
-
-
-├── core/
-
-│   ├── dataloader.py   数据集调用管理器
-
-│   ├── loss.py         
-
-│   ├── model.py        模型调用管理器
-
-│   ├── optimizer.py    
-
-│   └── utils.py        常用函数
-
-├── result/
-
-│   ├── checkpoints/
-
-│   ├── logs/
-
-│   ├── models/
-
-│   └── tensorboard/    tensorboard训练日志
-
-├── tools/
-
-│   ├── check.py
-
-└── readme.md
 
 
 
