@@ -5,5 +5,29 @@
 组员：蔡烨南 王佳豪 王亦飞 丁心成
 
 ### 代码仓库介绍
-
-![参考示意图](./pictures/reference.png)
+```
+├── Dataset
+│   ├── Dataset.py      数据加载类
+│   └── _init_.py
+├── README.md
+├── core
+│   ├── _init_.py
+│   ├── dataloader.py   数据加载管理
+│   ├── loss.py         loss函数管理
+│   ├── model.py        模型管理
+│   ├── optimizer.py
+│   └── utils.py        常用工具
+├── evaluate.py
+├── main.py             可运行主函数
+├── models
+│   └── crowdflow.py
+├── opts.py             参数管理
+├── result
+│   ├── checkpoints
+│   ├── logs
+│   ├── models
+│   └── tensorboard     tensorboard可视化结果
+├── tools               工具
+│   └── check.py        
+└── train.py
+```
