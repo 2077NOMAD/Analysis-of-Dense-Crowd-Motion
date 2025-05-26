@@ -8,6 +8,13 @@ def generate_Emo_model(opt):
         opt,
         num_classes=opt.n_classes,
     )
-    model = nn.DataParallel(model)
     model=model.cuda()
     return model, model.parameters()
+
+
+class GetModel:
+    def __init__(self):
+        self.model_name = None
+    
+    def get_model(self, model_name):
+        pass
