@@ -52,6 +52,10 @@ def parse_opts():
                  default=5e-4,
                  type=float,
                  help='Weight Decay'),
+            dict(name='--optimizer',
+                 default='adam',
+                 type=str,
+                 help='Optimizer'),
         ],
         'network': [
         ],
