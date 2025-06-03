@@ -5,12 +5,12 @@ import torch
 import warnings
 import json
 
-from deep_sort.detector import build_detection
-from deep_sort.deep_sort import build_tracker
-from deep_sort.utils.log import get_logger
-from deep_sort.utils.draw import draw_boxes
-from deep_sort.utils.io import write_results
-from deep_sort.utils.parser import get_config
+# from .deep_sort.detector import build_detection
+from .deep_sort.detector import build_detection
+from .deep_sort import build_tracker
+from .deep_sort.utils.log import get_logger
+from .deep_sort.utils.draw import draw_boxes
+from .deep_sort.utils.io import write_results
 
 
 class VideoTracker:
@@ -62,7 +62,7 @@ class VideoTracker:
         results = []
         idx_frame = 0
 
-        with open('coco_classes.json', 'r') as f:
+        with open('demonstration/deep_sort/coco_classes.json', 'r') as f:
             idx_to_class = json.load(f)
         
         while self.video.grab():

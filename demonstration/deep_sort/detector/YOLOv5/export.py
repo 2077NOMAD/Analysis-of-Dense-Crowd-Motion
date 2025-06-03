@@ -59,18 +59,18 @@ from torch.utils.mobile_optimizer import optimize_for_mobile
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))  # add ROOT to PATH
+# if str(ROOT) not in sys.path:
+#     sys.path.append(str(ROOT))  # add ROOT to PATH
 ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
-from models.common import Conv
-from models.experimental import attempt_load
-from models.yolo import Detect
-from detector.YOLOv5.utils.activations import SiLU
-from detector.YOLOv5.utils.datasets import LoadImages
-from detector.YOLOv5.utils.general import (LOGGER, check_dataset, check_img_size, check_requirements, check_version, colorstr,
+from .models.common import Conv
+from .models.experimental import attempt_load
+from .models.yolo import Detect
+from ..YOLOv5.utils.activations import SiLU
+from ..YOLOv5.utils.datasets import LoadImages
+from ..YOLOv5.utils.general import (LOGGER, check_dataset, check_img_size, check_requirements, check_version, colorstr,
                            file_size, print_args, url2file)
-from detector.YOLOv5.utils.torch_utils import select_device
+from ..YOLOv5.utils.torch_utils import select_device
 
 
 def export_formats():
@@ -253,7 +253,7 @@ def export_saved_model(model, im, file, dynamic,
         import tensorflow as tf
         from tensorflow.python.framework.convert_to_constants import convert_variables_to_constants_v2
 
-        from models.tf import TFDetect, TFModel
+        from .models.tf import TFDetect, TFModel
 
         LOGGER.info(f'\n{prefix} starting export with tensorflow {tf.__version__}...')
         f = str(file).replace('.pt', '_saved_model')
@@ -324,7 +324,7 @@ def export_tflite(keras_model, im, file, int8, data, ncalib, prefix=colorstr('Te
         converter.target_spec.supported_types = [tf.float16]
         converter.optimizations = [tf.lite.Optimize.DEFAULT]
         if int8:
-            from models.tf import representative_dataset_gen
+            from .models.tf import representative_dataset_gen
             dataset = LoadImages(check_dataset(data)['train'], img_size=imgsz, auto=False)  # representative data
             converter.representative_dataset = lambda: representative_dataset_gen(dataset, ncalib)
             converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]

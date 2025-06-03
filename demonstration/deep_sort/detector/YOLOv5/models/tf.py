@@ -17,8 +17,8 @@ from pathlib import Path
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[1]  # YOLOv5 root directory
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))  # add ROOT to PATH
+# if str(ROOT) not in sys.path:
+#     sys.path.append(str(ROOT))  # add ROOT to PATH
 # ROOT = ROOT.relative_to(Path.cwd())  # relative
 
 import numpy as np
@@ -27,10 +27,10 @@ import torch
 import torch.nn as nn
 from tensorflow import keras
 
-from models.common import C3, SPP, SPPF, Bottleneck, BottleneckCSP, Concat, Conv, DWConv, Focus, autopad
-from models.experimental import CrossConv, MixConv2d, attempt_load
-from models.yolo import Detect
-from detector.YOLOv5.activations import SiLU
+from .common import C3, SPP, SPPF, Bottleneck, BottleneckCSP, Concat, Conv, DWConv, Focus, autopad
+from .experimental import CrossConv, MixConv2d, attempt_load
+from .yolo import Detect
+from demostration.deep_sort.detector.YOLOv5.activations import SiLU
 from detector.YOLOv5.general import LOGGER, make_divisible, print_args
 
 

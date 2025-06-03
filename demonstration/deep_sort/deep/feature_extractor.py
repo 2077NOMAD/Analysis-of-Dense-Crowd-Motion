@@ -5,10 +5,11 @@ import cv2
 import logging
 import sys
 
-sys.path.append("../../../models/")
+# sys.path.append("../../../models/")
 
 # from .model import Net
-from ReID import ReID
+# from models.ReID import ReID
+from models.ReID import ReID
 
 class Extractor(object):
     def __init__(self, model_path, use_cuda=True):

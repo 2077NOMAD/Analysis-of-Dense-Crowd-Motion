@@ -33,15 +33,15 @@ import pandas as pd
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[1]  # YOLOv5 root directory
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))  # add ROOT to PATH
+# if str(ROOT) not in sys.path:
+#     sys.path.append(str(ROOT))  # add ROOT to PATH
 # ROOT = ROOT.relative_to(Path.cwd())  # relative
 
 import export
 import val
-from detector.YOLOv5.utils import notebook_init
-from detector.YOLOv5.utils.general import LOGGER, print_args
-s
+from demonstration.deep_sort.detector.YOLOv5.utils import notebook_init
+from demonstration.deep_sort.detector.YOLOv5.utils.general import LOGGER, print_args
+
 
 def run(weights=ROOT / 'yolov5s.pt',  # weights path
         imgsz=640,  # inference size (pixels)

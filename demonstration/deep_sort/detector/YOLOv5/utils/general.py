@@ -29,8 +29,8 @@ import torch
 import torchvision
 import yaml
 
-from detector.YOLOv5.utils.downloads import gsutil_getsize
-from detector.YOLOv5.utils.metrics import box_iou, fitness
+from demonstration.deep_sort.detector.YOLOv5.utils.downloads import gsutil_getsize
+from demonstration.deep_sort.detector.YOLOv5.utils.metrics import box_iou, fitness
 
 # Settings
 FILE = Path(__file__).resolve()

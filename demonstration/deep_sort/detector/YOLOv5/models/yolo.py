@@ -11,18 +11,20 @@ import sys
 from copy import deepcopy
 from pathlib import Path
 
-FILE = Path(__file__).resolve()
-ROOT = FILE.parents[1]  # YOLOv5 root directory
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))  # add ROOT to PATH
+# FILE = Path(__file__).resolve()
+# ROOT = FILE.parents[1]  # YOLOv5 root directory
+# if str(ROOT) not in sys.path:
+#     sys.path.append(str(ROOT))  # add ROOT to PATH
 # ROOT = ROOT.relative_to(Path.cwd())  # relative
 
-from models.common import *
-from models.experimental import *
-from detector.YOLOv5.utils.autoanchor import check_anchor_order
-from detector.YOLOv5.utils.general import LOGGER, check_version, check_yaml, make_divisible, print_args
-from detector.YOLOv5.utils.plots import feature_visualization
-from detector.YOLOv5.utils.torch_utils import fuse_conv_and_bn, initialize_weights, model_info, scale_img, select_device, time_sync
+# from .common import *
+# from .experimental import *
+from demonstration.deep_sort.detector.YOLOv5.models.common import *
+from demonstration.deep_sort.detector.YOLOv5.models.experimental import *
+from demonstration.deep_sort.detector.YOLOv5.utils.autoanchor import check_anchor_order
+from demonstration.deep_sort.detector.YOLOv5.utils.general import LOGGER, check_version, check_yaml, make_divisible, print_args
+from demonstration.deep_sort.detector.YOLOv5.utils.plots import feature_visualization
+from demonstration.deep_sort.detector.YOLOv5.utils.torch_utils import fuse_conv_and_bn, initialize_weights, model_info, scale_img, select_device, time_sync
 
 try:
     import thop  # for FLOPs computation

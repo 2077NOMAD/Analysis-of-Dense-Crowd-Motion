@@ -2,14 +2,62 @@
 """
 Experimental modules
 """
+
+# demo.py
+
+import sys, os, importlib.util, types
+
+# ────── 1. “虚拟”一个顶级包 models ──────
+#    先造一个空模块，让 Python 认为：models 这个包已经在 sys.modules 里了
+fake_models_pkg = types.ModuleType("models")
+# （__path__ 可以留空，或者设为 []，常见做法是给空列表）
+fake_models_pkg.__path__ = []  
+sys.modules["models"] = fake_models_pkg
+
+# ────── 2. 把 YOLOv5 源码的 yolo.py、common.py 以“models.yolo”、“models.common”名义加载进来 ──────
+#    请根据你项目的实际结构，修改下面这两个路径
+
+# 实际存放 yolo.py 的绝对路径
+yolo_py_path = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        "yolo.py"
+    )
+)
+# 实际存放 common.py 的绝对路径
+common_py_path = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        "common.py"
+    )
+)
+
+# ─── 2.1 加载 yolo.py 到 sys.modules["models.yolo"] ───
+spec_yolo = importlib.util.spec_from_file_location("models.yolo", yolo_py_path)
+mod_yolo = importlib.util.module_from_spec(spec_yolo)
+spec_yolo.loader.exec_module(mod_yolo)
+sys.modules["models.yolo"] = mod_yolo
+
+# ─── 2.2 加载 common.py 到 sys.modules["models.common"] ───
+spec_common = importlib.util.spec_from_file_location("models.common", common_py_path)
+mod_common = importlib.util.module_from_spec(spec_common)
+spec_common.loader.exec_module(mod_common)
+sys.modules["models.common"] = mod_common
+
+# 到这里为止：
+#   sys.modules["models"] 存在（一个空的包），
+#   sys.modules["models.yolo"]、sys.modules["models.common"] 分别指向 YOLOv5 里实际的 yolo.py、common.py
+
+
 import math
 
 import numpy as np
 import torch
 import torch.nn as nn
 
-from models.common import Conv
-from detector.YOLOv5.utils.downloads import attempt_download
+from demonstration.deep_sort.detector.YOLOv5.models.common import Conv
+# from models.common import Conv
+from demonstration.deep_sort.detector.YOLOv5.utils.downloads import attempt_download
 
 
 class CrossConv(nn.Module):
@@ -88,12 +136,18 @@ class Ensemble(nn.ModuleList):
 
 
 def attempt_load(weights, map_location=None, inplace=True, fuse=True):
-    from models.yolo import Detect, Model
+    from demonstration.deep_sort.detector.YOLOv5.models.yolo import Detect, Model
+    # .yolo import Detect, Model
 
     # Loads an ensemble of models weights=[a,b,c] or a single model weights=[a] or weights=a
     model = Ensemble()
+    # print(model)
     for w in weights if isinstance(weights, list) else [weights]:
-        ckpt = torch.load(attempt_download(w), map_location=map_location)  # load
+        # ckpt = torch.load(attempt_download(w), map_location=map_location)  # load
+        file_name = attempt_download(w)
+        ckpt = torch.load(file_name, map_location=map_location)
+        # ckpt = torch.load(file_name)
+        print(ckpt)
         if fuse:
             model.append(ckpt['ema' if ckpt.get('ema') else 'model'].float().fuse().eval())  # FP32 model
         else:

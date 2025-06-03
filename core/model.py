@@ -18,9 +18,17 @@ def generate_ReID_model(opt):
     model = model.cuda()
     return model, model.parameters()
 
-class GetModel:
-    def __init__(self):
-        self.model_name = None
+# class GetModel:
+#     def __init__(self):
+#         self.model_name = None
     
-    def get_model(self, model_name):
-        pass
+#     def get_model(self, model_name):
+#         pass
+
+def get_model(opt):
+    if opt.model == 'emo':
+        return generate_Emo_model(opt)
+    elif opt.model == 'deepsort':
+        return generate_ReID_model(opt)
+    else:
+        raise ValueError(f"Unknown model type: {opt.model}")
