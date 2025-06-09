@@ -1,7 +1,10 @@
+import torch
 from tqdm import tqdm
+
 from core.utils import run_model
 
-def evaluate(epoch, data_loader, model, criterion, opt, writer):
+
+def evaluate_emo(epoch, data_loader, model, criterion, opt, writer):
     model.eval()
     total_loss = 0.0
     correct = 0
@@ -25,3 +28,16 @@ def evaluate(epoch, data_loader, model, criterion, opt, writer):
     writer.add_scalar('val/loss', avg_loss, epoch)
     writer.add_scalar('val/acc', acc, epoch)
     return avg_loss, acc
+
+
+def evaluate_reid(epoch, data_loader, model, criterion, opt, writer):
+    pass
+
+
+def evaluate(epoch, data_loader, model, criterion, opt, writer):
+    if opt.model == 'emo':
+        return evaluate_emo(epoch, data_loader, model, criterion, opt, writer)
+    elif opt.model == 'deepsort':
+        return evaluate_reid(epoch, data_loader, model, criterion, opt, writer)
+    else:
+        raise ValueError(f"Unknown model type: {opt.model}")

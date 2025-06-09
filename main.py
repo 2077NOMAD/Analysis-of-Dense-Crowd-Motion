@@ -18,8 +18,8 @@ def main():
     opt.device_ids = list(range(device_count()))
     timestamp = datetime.datetime.now().strftime("%m%d_%H%M")
     local2global_path(opt)
-    model,parameters = generate_Emo_model(opt)
-    criterion = get_loss(opt)
+    model,parameters = generate_Emo_model(opt) #
+    criterion = get_loss(opt) #
     criterion = criterion.cuda()
     optimizer = get_optim(opt, parameters)
     writer = SummaryWriter(logdir=os.path.join(opt.tboard_path, timestamp))
@@ -27,7 +27,7 @@ def main():
     temporal_transform = None
     target_transform = None
 
-    training_data = get_training_set(opt, spatial_transform, temporal_transform, target_transform)
+    training_data = get_training_set(opt, spatial_transform, temporal_transform, target_transform) #
     train_loader = get_data_loader(opt, training_data, shuffle=True)
     validation_data = get_validation_set(opt, spatial_transform, temporal_transform, target_transform)
     val_loader = get_data_loader(opt, validation_data, shuffle=False)
@@ -74,9 +74,6 @@ def main():
             # logging.info(f"Best model saved, val_acc: {val_acc*100:.2f}%")
         logging.info(f"best_acc: {best_acc*100:.2f}%\n\n")
     writer.close()
-
-
-    
 
 
 # 修改训练参数部分

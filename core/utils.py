@@ -21,9 +21,22 @@ def local2global_path(opt):
 
 
 
-def run_model(opt, inputs, model, criterion,labels):
+def run_emo(opt, inputs, model, criterion,labels):
     vit_embeds = inputs['Video']
     llm_embeds = inputs['LLM']
     output = model(vit_embeds=vit_embeds, llm_embeds=llm_embeds)
     loss = criterion(output, labels)
     return output,loss
+
+
+def run_deepsort(opt, inputs, model):
+    pass
+
+
+def run_model(opt, inputs, model, criterion=None, labels=None):
+    if opt.model == 'emo':
+        return run_emo(opt, inputs, model, criterion, labels)
+    elif opt.model == 'deepsort':
+        return run_deepsort(opt, inputs, model)
+    else:
+        raise ValueError(f"Unknown model type: {opt.model}")
