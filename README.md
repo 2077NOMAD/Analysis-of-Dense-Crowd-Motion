@@ -1,4 +1,4 @@
-## 密集人群运动分析
+![result_0076](https://github.com/user-attachments/assets/8ea6de1e-b79d-4440-9a8c-b00c616e586b)## 密集人群运动分析
 
 组长：晏瑞阳
 
@@ -13,6 +13,10 @@
 4. 正在研究如何改进RAFT光流法；
 5. 正在进行SHENet的复现，但环境配置较为特殊，不便迁移；
 6. 正在安排项目报告的撰写和答辩ppt的学习制作。
+
+### 部分实验结果
+![result_0076](https://github.com/user-attachments/assets/f04f58d2-bb11-4198-a956-94da72e1c555)
+
 
 ### 代码仓库介绍
 ```
