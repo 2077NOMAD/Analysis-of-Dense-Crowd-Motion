@@ -1,4 +1,4 @@
-![result_0076](https://github.com/user-attachments/assets/8ea6de1e-b79d-4440-9a8c-b00c616e586b)## 密集人群运动分析
+## 密集人群运动分析
 
 组长：晏瑞阳
 
@@ -15,7 +15,12 @@
 6. 正在安排项目报告的撰写和答辩ppt的学习制作。
 
 ### 部分实验结果
+#### RAFT
 ![result_0076](https://github.com/user-attachments/assets/f04f58d2-bb11-4198-a956-94da72e1c555)
+
+#### SocialVAE
+<img width="1241" alt="image" src="https://github.com/user-attachments/assets/b507ac13-7e5e-4ab8-853e-8b791074e351" />
+
 
 
 ### 代码仓库介绍
