@@ -21,7 +21,9 @@
 #### SocialVAE
 <img width="1241" alt="image" src="https://github.com/user-attachments/assets/b507ac13-7e5e-4ab8-853e-8b791074e351" />
 
+#### DeepSORT
 
+![deepsort](pictures/deepsort.jpg)
 
 ### 代码仓库介绍
 ```
