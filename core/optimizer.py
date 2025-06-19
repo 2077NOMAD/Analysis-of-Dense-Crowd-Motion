@@ -3,12 +3,11 @@ from torch import optim
 from torch.optim import Adam, SGD
 
 
-def get_optim(opt, parameters):
-    if opt.optimizer == 'adam':
-        optimizer = Adam(filter(lambda p: p.requires_grad, parameters),
-                        lr=opt.learning_rate,
-                        weight_decay=opt.weight_decay)
-    elif opt.optimizer == 'sgd':
-        pg = [p for p in parameters() if p.requires_grad]
-        optimizer = SGD(pg, lr=opt.learning_rate, momentum=0.9, weight_decay=5e-4)
-    return optimizer
+def fetch_optimizer(args, model):
+    """ Create the optimizer and learning rate scheduler """
+    optimizer = optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.wdecay, eps=args.epsilon)
+
+    scheduler = optim.lr_scheduler.OneCycleLR(optimizer, args.lr, args.num_steps+100,
+        pct_start=0.05, cycle_momentum=False, anneal_strategy='linear')
+
+    return optimizer, scheduler

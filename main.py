@@ -1,79 +1,88 @@
-from tensorboardX import SummaryWriter
-import logging
-import datetime
-from train import train_one_epoch
-from evaluate import evaluate
-from core.dataloader import get_training_set, get_validation_set, get_test_set, get_data_loader
-from core.model import generate_Emo_model
-from opts import parse_opts
-from core.optimizer import get_optim
-from core.loss import get_loss
-from torch.cuda import device_count
-from core.utils import local2global_path
 import os
+from opts import parse_opts
+import torch
+from torch.cuda.amp import GradScaler
+import numpy as np
+
+
+from Dataset.datasets import fetch_dataloader
+from core.model import generate_Raft_model
+from core.optimizer import fetch_optimizer
+from core.loss import sequence_loss
+from core.Logger import Logger
+import evaluate
 
 
 def main():
-    opt = parse_opts()
-    opt.device_ids = list(range(device_count()))
-    timestamp = datetime.datetime.now().strftime("%m%d_%H%M")
-    local2global_path(opt)
-    model,parameters = generate_Emo_model(opt) #
-    criterion = get_loss(opt) #
-    criterion = criterion.cuda()
-    optimizer = get_optim(opt, parameters)
-    writer = SummaryWriter(logdir=os.path.join(opt.tboard_path, timestamp))
-    spatial_transform = None
-    temporal_transform = None
-    target_transform = None
+    args = parse_opts()
 
-    training_data = get_training_set(opt, spatial_transform, temporal_transform, target_transform) #
-    train_loader = get_data_loader(opt, training_data, shuffle=True)
-    validation_data = get_validation_set(opt, spatial_transform, temporal_transform, target_transform)
-    val_loader = get_data_loader(opt, validation_data, shuffle=False)
-
-    log_file = os.path.join(opt.log_path, "/train_{timestamp}.log")
-    logging.basicConfig(
-        filename=log_file, 
-        format="%(asctime)s - %(levelname)s - %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
-        level=logging.INFO,
-        force=True  
-    )
-    console = logging.StreamHandler()
-    console.setLevel(logging.INFO)
-    logging.getLogger().addHandler(console)
+    # load model
+    model = generate_Raft_model(args) 
+    model.cuda()
+    model.train()
+    model.module.freeze_bn()
     
-    best_acc = 0.0
-    writer = SummaryWriter(log_dir=os.path.join(opt.tboard_path, timestamp))
-    for i in range(1, opt.n_epochs + 1):
-        train_loss, train_acc = train_one_epoch(
-            epoch=i,
-            data_loader=train_loader,
-            model=model,
-            criterion=criterion,
-            optimizer=optimizer,
-            opt=opt,
-            writer=writer
-        )
-        val_loss, val_acc = evaluate(
-            epoch=i,
-            data_loader=val_loader,
-            model=model,
-            criterion=criterion,
-            opt=opt,
-            writer=writer
-        )
-        logging.info(f"Epoch {i}/{opt.n_epochs} :")
-        logging.info(f"Train_loss: {train_loss:.4f}----Val_loss: {val_loss:.4f}")
-        logging.info(f"Train_acc: {train_acc*100:.2f}%----Val_acc: {val_acc*100:.2f}%")
-        logging.info(f"Learning rate: {optimizer.param_groups[0]['lr']:.2e}")
-        if val_acc > best_acc:
-            best_acc = val_acc
-            # torch.save(model.state_dict(), opt.model_path + "/best_model.pth")
-            # logging.info(f"Best model saved, val_acc: {val_acc*100:.2f}%")
-        logging.info(f"best_acc: {best_acc*100:.2f}%\n\n")
-    writer.close()
+
+
+    train_loader = fetch_dataloader(args)
+    optimizer, scheduler = fetch_optimizer(args, model)
+
+    total_steps = 0
+    scaler = GradScaler(enabled=args.mixed_precision)
+    logger = Logger(model, scheduler)
+
+    VAL_FREQ = 5000
+
+    should_keep_training = True
+    while should_keep_training:
+
+        for i_batch, data_blob in enumerate(train_loader):
+            optimizer.zero_grad()
+            image1, image2, flow, valid = [x.cuda() for x in data_blob]
+
+            if args.add_noise:
+                stdv = np.random.uniform(0.0, 5.0)
+                image1 = (image1 + stdv * torch.randn(*image1.shape).cuda()).clamp(0.0, 255.0)
+                image2 = (image2 + stdv * torch.randn(*image2.shape).cuda()).clamp(0.0, 255.0)
+
+            flow_predictions = model(image1, image2, iters=args.iters)            
+
+            loss, metrics = sequence_loss(flow_predictions, flow, valid, args.gamma)
+            scaler.scale(loss).backward()
+            scaler.unscale_(optimizer)                
+            torch.nn.utils.clip_grad_norm_(model.parameters(), args.clip)
+            
+            scaler.step(optimizer)
+            scheduler.step()
+            scaler.update()
+            logger.push(metrics)
+
+            if total_steps % VAL_FREQ == VAL_FREQ - 1:
+                PATH = 'checkpoints/%d_%s.pth' % (total_steps+1, args.name)
+                torch.save(model.state_dict(), PATH)
+
+                results = {}
+                for val_dataset in args.validation:
+                    if val_dataset == 'sintel':
+                        results.update(evaluate.validate_sintel(model.module))
+
+                logger.write_dict(results)
+                
+                model.train()
+                model.module.freeze_bn()
+            
+            total_steps += 1
+
+            if total_steps > args.num_steps:
+                should_keep_training = False
+                break
+
+    logger.close()
+    PATH = 'checkpoints/%s.pth' % args.name
+    torch.save(model.state_dict(), PATH)
+
+
+    
 
 
 # 修改训练参数部分
