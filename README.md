@@ -35,7 +35,7 @@
 
 ![deepsort](pictures/deepsort.jpg)
 
-### 代码仓库介绍
+### 代码仓库介绍（未更新）
 ```
 ├── Dataset
 │   ├── Dataset.py      数据加载类
