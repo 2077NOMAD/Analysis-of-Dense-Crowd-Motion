@@ -10,7 +10,7 @@
 1. 已完成五篇论文的综述终稿，详情可见`论文综述`（RAFT，DeepSORT，SHENet，SocialVAE，CPEPF）；
 2. 已完成RAFT、Deep_sort、SocialVAE三种方法的复现；
 3. 已完成集成可视化Demo的制作（目前已有RAFT、DeepSORT、SocialVAE三种方法）；
-4. 已完成对WuhanMetro数据集的标注（平均120帧左右）Darklabel画框）；已采集100个视频（平均10帧左右）并部分标注；共计标注1500帧以上；二者均已上传至百度网盘，[数据集](https://pan.baidu.com/s/1tZFx7_pcH5Ma3yvWD6S6Xg?pwd=zasz)，内含WuhanMetro、自制数据集、数据集标注指南；
+4. 已完成对WuhanMetro数据集的标注（平均120帧左右，Darklabel画框）；已采集100个视频（平均10帧左右）并部分标注；共计标注1500帧以上；二者均已上传至百度网盘，[数据集](https://pan.baidu.com/s/1tZFx7_pcH5Ma3yvWD6S6Xg?pwd=zasz)，内含WuhanMetro、自制数据集、数据集标注指南；
 5. 大致完成了对Raft的改进，正在进一步评估改进效果，具体改进方法见后面的章节（持续更新中）；代码已上传；
 6. 正在进行SHENet的复现，但是与SocialVAE为同一类型（轨迹预测），且环境版本配置复杂，任务优先级不高；
 7. 项目报告已完成绪论、相关工作、数据集介绍（包括WuhanMetro和自制数据集）、个人总结部分的撰写，正在进行实验部分的撰写；
