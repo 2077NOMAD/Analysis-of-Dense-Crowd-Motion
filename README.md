@@ -26,7 +26,8 @@
 
 ### 部分实验结果
 #### RAFT
-![result_0059](https://github.com/user-attachments/assets/487a6467-6b80-4e47-9c2e-14d9b4d11e48)
+![result_0071](https://github.com/user-attachments/assets/01875e59-2f93-4a17-bfb7-b9975943fdb4)
+![result_0023](https://github.com/user-attachments/assets/a9b12ca1-985e-4173-85aa-2bed0768d90a)
 
 
 #### SocialVAE
