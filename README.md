@@ -32,7 +32,7 @@
 
 #### SocialVAE
 <!-- <img width="1241" alt="image" src="https://github.com/user-attachments/assets/b507ac13-7e5e-4ab8-853e-8b791074e351" /> -->
-![socialvae](pictures/socialvae.png)
+![socialvae](pictures/socialvae_demo.png)
 
 #### DeepSORT
 
