@@ -18,6 +18,7 @@
 ### 可视化demo视频
 
 <video controls src="pictures/merged_output.mp4" title="Title"></video>
+见 pictures 中视频。
 
 ### 改进模型：RAFT-ResNet
 
