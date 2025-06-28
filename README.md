@@ -4,11 +4,11 @@
 
 组员：蔡烨南 王佳豪 王亦飞 丁心成
 
-### 进度简述：
+### 项目成果：
 
 1. 已完成五篇论文的综述终稿，详情可见`论文综述`（RAFT，DeepSORT，SHENet，SocialVAE，CPEPF）；
 2. 已完成RAFT、Deep_sort、SocialVAE三种方法的复现；
-3. 已完成集成可视化Demo的制作（目前已有RAFT、DeepSORT、SocialVAE三种方法）；
+3. 已完成集成可视化Demo的制作（包括RAFT、DeepSORT、SocialVAE三种方法）；
 4. 已完成对WuhanMetro数据集的标注（平均120帧左右，Darklabel画框）；已采集100个视频（平均10帧左右）并部分标注；共计标注1500帧以上；二者均已上传至百度网盘，[数据集](https://pan.baidu.com/s/1qEcurJVToYpBjYmeZTJv0w?pwd=gqny)，内含WuhanMetro、自制数据集、数据集标注指南；
 5. 完成了对Raft的改进与效果评估，具体改进方法见后面的章节；代码和日志文件已上传（包括log文本以及tensorboard日志）；
 6. 完整项目报告的撰写；
@@ -75,12 +75,12 @@
 ├── tools               工具
 │   └── check.py        
 ├── train.py
-├── demo
-│   ├── checkpoint
-│   ├── model
-│   ├── DeepSORT_demo.py
-│   ├── RAFT_demo.py
-│   ├── SocialVAE_demo.py
-│   ├── demo.py
-│   └── demo.sh
+└── demo                可视化demo
+    ├── checkpoint
+    ├── model
+    ├── DeepSORT_demo.py
+    ├── RAFT_demo.py
+    ├── SocialVAE_demo.py
+    ├── demo.py
+    └── demo.sh
 ```
